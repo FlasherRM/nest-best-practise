@@ -1,10 +1,15 @@
 import { Injectable } from '@nestjs/common';
 import { TaskRO, TasksRO } from './task.interface';
-import { getRepository, Repository } from 'typeorm';
+import {
+  DeleteResult,
+  FindOptionsWhere,
+  getRepository,
+  ObjectID,
+  Repository,
+} from 'typeorm';
 import { TaskEntity } from './task.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CreateTaskDto } from './dto/create-task.dto';
-import slug from 'slug';
 
 @Injectable()
 export class TaskService {
@@ -12,13 +17,13 @@ export class TaskService {
     @InjectRepository(TaskEntity)
     private readonly taskRepository: Repository<TaskEntity>,
   ) {}
+
   async findAll(query): Promise<TasksRO> {
-    const qb = await getRepository(TaskEntity)
-      .createQueryBuilder('task')
+    const qb = await this.taskRepository.createQueryBuilder('task');
 
     qb.where('1 = 1');
 
-    qb.orderBy('article.created', 'DESC');
+    qb.orderBy('task.created', 'DESC');
 
     const tasksCount = await qb.getCount();
 
@@ -41,5 +46,16 @@ export class TaskService {
     const newArticle = await this.taskRepository.save(task);
 
     return newArticle;
+  }
+
+  async update(id: number, taskData: any): Promise<TaskRO> {
+    const toUpdate = await this.taskRepository.findOneById(id);
+    const updated = Object.assign(toUpdate, taskData);
+    const task = await this.taskRepository.save(updated);
+    return { task };
+  }
+
+  async delete(slug: number): Promise<DeleteResult> {
+    return await this.taskRepository.delete({ id: slug });
   }
 }

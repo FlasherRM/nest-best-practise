@@ -4,7 +4,16 @@ import {
   ApiOperation,
   ApiTags,
 } from '@nestjs/swagger';
-import { Body, Controller, Get, Param, Post, Query} from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Put,
+  Query,
+} from '@nestjs/common';
 import { TaskRO, TasksRO } from './task.interface';
 import { TaskService } from './task.service';
 import { CreateTaskDto } from './dto/create-task.dto';
@@ -34,5 +43,27 @@ export class TaskController {
   @Post()
   async create(@Body() taskData: CreateTaskDto) {
     return this.taskService.create(taskData);
+  }
+
+  @ApiOperation({ summary: 'Update Task' })
+  @ApiResponse({
+    status: 201,
+    description: 'The task has been successfully updated.',
+  })
+  @ApiResponse({ status: 403, description: 'Forbidden.' })
+  @Put(':slug')
+  async update(@Param() params, @Body() taskData: CreateTaskDto) {
+    return this.taskService.update(params.slug, taskData);
+  }
+
+  @ApiOperation({ summary: 'Delete task' })
+  @ApiResponse({
+    status: 201,
+    description: 'The task has been successfully deleted.',
+  })
+  @ApiResponse({ status: 403, description: 'Forbidden.' })
+  @Delete(':slug')
+  async delete(@Param() params) {
+    return this.taskService.delete(params.slug);
   }
 }

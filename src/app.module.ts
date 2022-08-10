@@ -3,6 +3,7 @@ import { AppController } from './app.controller';
 import { TaskModule } from './task/task.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Connection } from 'typeorm';
+import { UserModule } from './user/user.module';
 
 @Module({
   imports: [
@@ -17,10 +18,11 @@ import { Connection } from 'typeorm';
       autoLoadEntities: true,
       synchronize: true,
     }),
+    UserModule,
   ],
   controllers: [AppController],
   providers: [],
 })
 export class ApplicationModule {
-  constructor(connection: Connection) {}
+  constructor(private readonly connection: Connection) {}
 }

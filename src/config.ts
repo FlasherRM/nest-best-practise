@@ -7,3 +7,4 @@ export const ProjectOptions = {
   version: '1.0',
   basePath: globalPrefix,
 };
+export const SECRET = 'ASDASD';
