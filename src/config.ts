@@ -1,5 +1,9 @@
+// Here is the configuration file
+// Customize it however you like
 export const appOptions = { cors: true };
+// Global prefix that comes after the domain
 export const globalPrefix = 'api';
+// The project port
 export const PORT = 3000;
 export const ProjectOptions = {
   title: 'NestJS Realworld Example App',
@@ -7,4 +11,5 @@ export const ProjectOptions = {
   version: '1.0',
   basePath: globalPrefix,
 };
-export const SECRET = 'ASDASD';
+// SECRET KEY HERE
+export const SECRET = 'secret-key';

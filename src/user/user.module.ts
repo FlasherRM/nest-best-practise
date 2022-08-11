@@ -15,7 +15,6 @@ import { SECRET } from '../config';
     TypeOrmModule.forFeature([UserEntity]),
     JwtModule.register({
       secret: SECRET,
-      signOptions: { expiresIn: '5h' },
     }),
   ],
   providers: [UserService],

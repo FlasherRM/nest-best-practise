@@ -8,7 +8,6 @@ import {
   Controller,
   UsePipes,
 } from '@nestjs/common';
-import { Request } from 'express';
 import { UserService } from './user.service';
 import { UserRO } from './user.interface';
 import { CreateUserDto, UpdateUserDto, LoginUserDto } from './dto';
@@ -29,10 +28,7 @@ export class UserController {
   }
 
   @Put('user/:id')
-  async update(
-    @Param('id') userId: number,
-    @Body('user') userData: UpdateUserDto,
-  ) {
+  async update(@Param('id') userId: number, @Body() userData: UpdateUserDto) {
     return await this.userService.update(userId, userData);
   }
 
@@ -49,7 +45,7 @@ export class UserController {
 
   @UsePipes(new ValidationPipe())
   @Post('users/login')
-  async login(@Body('user') loginUserDto: LoginUserDto): Promise<UserRO> {
+  async login(@Body() loginUserDto: LoginUserDto): Promise<UserRO> {
     const _user = await this.userService.findOne(loginUserDto);
 
     const errors = { User: ' not found' };
