@@ -16,6 +16,14 @@ import { TaskEntity } from './task.entity';
 })
 export class TaskModule implements NestModule {
   public configure(consumer: MiddlewareConsumer) {
-    consumer;
+    consumer
+      .apply()
+      .forRoutes(
+        { path: 'task', method: RequestMethod.POST },
+        { path: 'task/:slug', method: RequestMethod.GET },
+        { path: 'task', method: RequestMethod.POST },
+        { path: 'task/:slug', method: RequestMethod.PUT },
+        { path: 'task/:slug', method: RequestMethod.DELETE },
+      );
   }
 }

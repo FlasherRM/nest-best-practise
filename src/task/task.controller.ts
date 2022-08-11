@@ -1,9 +1,4 @@
-import {
-  ApiBearerAuth,
-  ApiResponse,
-  ApiOperation,
-  ApiTags,
-} from '@nestjs/swagger';
+import { ApiResponse, ApiOperation } from '@nestjs/swagger';
 import {
   Body,
   Controller,

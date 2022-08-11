@@ -1,19 +1,12 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import {
-  DeleteResult,
-  getConnectionManager,
-  getRepository,
-  Repository,
-} from 'typeorm';
+import { DeleteResult, Repository } from 'typeorm';
 import { UserEntity } from './user.entity';
 import * as argon2 from 'argon2';
 import { LoginUserDto } from './dto/login-user.dto';
 import { CreateUserDto, UpdateUserDto } from './dto';
 import { UserRO } from './user.interface';
 import { validate } from 'class-validator';
-import jwt from 'jsonwebtoken';
-import { SECRET } from '../config';
 import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
